@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pathname'
+
 # constants
 describe Mina::SetupSsh, :setup_ssh do
   it { expect(described_class).to be_const_defined(:VERSION) }
@@ -52,5 +54,27 @@ describe Mina::SetupSsh, :setup_ssh do
     let(:ssh_keys) { [] }
 
     it { expect(described_class.new(ssh_keys).empty?).to be(true) }
+  end
+end
+
+describe Mina::SetupSsh, :setup_ssh do
+  sham!(:ssh_keys).array_faker.call.map(&:to_s).tap do |ssh_keys|
+    let(:subject) { described_class.new(ssh_keys) }
+
+    context '#empty?' do
+      it { expect(subject.empty?).to be(false) }
+    end
+
+    context '#size' do
+      it { expect(subject.size).to be(ssh_keys.size) }
+    end
+
+    ssh_keys.each do |ssh_key|
+      context '#fetch()' do
+        let(:k) { File.basename(ssh_key) }
+
+        it { expect(subject.fetch(k)).to be_a(Pathname) }
+      end
+    end
   end
 end
