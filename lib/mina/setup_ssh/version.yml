@@ -1,0 +1,11 @@
+---
+major: 0
+minor: 0
+patch: 1
+authors: ['Dimitri Arrigoni']
+email: 'dimitri@arrigoni.me'
+date: '2018-09-23'
+summary: 'Mina SSH keys provisioning.'
+description: 'Provisions deploy machine with SSH keys.'
+homepage: 'https://github.com/SwagDevOps/mina-setup_ssh'
+licenses: []
