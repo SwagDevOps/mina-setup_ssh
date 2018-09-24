@@ -1,0 +1,11 @@
+---
+keys: []
+add_command:
+  - 'ssh-add'
+  - '%<key>s'
+sync_command:
+  - 'rsync'
+  - '-ve'
+  - '"ssh -p #%<port>s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"'
+  - '%<key>s'
+  - '%<user>s@%<domain>s:~/.ssh/%<key_filename>s'
