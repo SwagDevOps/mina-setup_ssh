@@ -8,6 +8,7 @@ module Mina
 end
 
 require_relative 'setup_ssh/bundled'
+require 'dry/inflector'
 
 # Setup SSH main class
 class Mina::SetupSsh
@@ -51,6 +52,15 @@ class Mina::SetupSsh
   attr_writer :options
 
   class << self
+    # @return [String]
+    def identifier
+      Dry::Inflector.new.tap do |inflector|
+        inflector.demodulize(self.name).tap do |name|
+          return inflector.underscore(name)
+        end
+      end
+    end
+
     protected
 
     # Transform keys to obtain an ``Hash``.
