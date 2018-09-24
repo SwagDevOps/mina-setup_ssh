@@ -10,7 +10,7 @@ class Mina::SetupSsh
     #
     # @return [Boolean]
     def bundled?
-      Dir.chdir("#{__dir__}/../..") do
+      Dir.chdir("#{__dir__}/../../..") do
         [['gems.rb', 'gems.locked'], ['Gemfile', 'Gemfile.lock']]
           .map { |m| 2 == Dir.glob(m).size }
           .include?(true)
