@@ -123,6 +123,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dry-inflector (~> 0.1)
   faker (~> 1.9)
   github-markup (~> 2.0)
   interesting_methods (~> 0.1)
