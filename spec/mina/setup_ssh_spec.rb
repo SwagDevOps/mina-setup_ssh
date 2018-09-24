@@ -10,8 +10,13 @@ end
 # class methods
 describe Mina::SetupSsh, :setup_ssh do
   it { expect(described_class).to respond_to(:new).with(0).arguments }
+  it { expect(described_class).to respond_to(:bundled?).with(0).arguments }
   it { expect(described_class).to respond_to(:new).with(1).arguments }
   it { expect(described_class).to respond_to(:new).with(2).arguments }
+
+  context '.bundled?' do
+    it { expect(described_class.bundled?).to be(true) }
+  end
 end
 
 # instance methods
