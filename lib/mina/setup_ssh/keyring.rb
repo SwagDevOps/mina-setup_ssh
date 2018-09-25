@@ -14,7 +14,7 @@ class Mina::SetupSsh::Keyring < Hash
   # keys are remote filenames, values are local filepaths.
   # When a simple copy is expected, an ``Array`` can be used.
   #
-  # @param [Array<String>|Hash{Symbol|String => String}] ssh_keys
+  # @param [Array<String>|Hash{Symbol|String => String}] keys
   def initialize(keys = {})
     self.class.__send__(:transform, keys).each do |k, v|
       self[k] = v
