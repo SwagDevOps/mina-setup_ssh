@@ -17,6 +17,17 @@ class Mina::SetupSsh::Config < Hash
     end
   end
 
+  # @param [Symbol] key
+  # @param [Object] defaults
+  # @return [Object|nil]
+  def get(key, default = nil)
+    self["#{identifier}_#{key}".to_sym] || default
+  end
+
+  def identifier
+    self.class.identifier
+  end
+
   class << self
     # @return [String]
     def identifier
