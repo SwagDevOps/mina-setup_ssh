@@ -18,12 +18,16 @@ class Mina::SetupSsh::Config < Hash
   end
 
   # @param [Symbol] key
-  # @param [Object] defaults
+  # @param [Object] default
+  #
   # @return [Object|nil]
   def get(key, default = nil)
     self["#{identifier}_#{key}".to_sym] || default
   end
 
+  protected
+
+  # @see .identifier
   def identifier
     self.class.identifier
   end
@@ -50,7 +54,7 @@ class Mina::SetupSsh::Config < Hash
 
     # Acess global configuration (when it exists) variables
     #
-    # # @return [Hash{Symbol => Object}]
+    # @return [Hash{Symbol => Object}]
     def app_config
       Object.const_get('::Mina::Configuration').instance.variables
     rescue NameError
