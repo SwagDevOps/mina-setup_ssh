@@ -23,8 +23,15 @@ end
 
 # instance methods
 describe Mina::SetupSsh, :setup_ssh do
+  it { expect(subject).to respond_to(:config).with(0).arguments }
   it { expect(subject).to respond_to(:verbose?).with(0).arguments }
-  it { expect(subject).to respond_to(:verbose?).with(0).arguments }
+end
+
+describe Mina::SetupSsh, :setup_ssh do
+  context '#config' do
+    it { expect(subject.config).to be_a(Hash) }
+    it { expect(subject.config).to be_a(Mina::SetupSsh::Config) }
+  end
 end
 
 describe Mina::SetupSsh, :setup_ssh do
