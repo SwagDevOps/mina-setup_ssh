@@ -25,11 +25,5 @@ class Mina::SetupSsh
   }.each { |k, v| autoload k, "#{__dir__}/setup_ssh/#{v}" }
 
   include Configurable
-
-  # Denote verbose.
-  #
-  # @return [Boolean]
-  def verbose?
-    self.config.fetch(:verbose, false)
-  end
+  include Configurable::Verbose
 end
