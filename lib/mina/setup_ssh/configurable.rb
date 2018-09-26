@@ -7,6 +7,8 @@ require_relative '../setup_ssh'
 # A configurable is initialized using a config (as a ``Hash``)
 # and has an accessor for (reader).
 module Mina::SetupSsh::Configurable
+  autoload :Verbose, "#{__dir__}/configurable/verbose"
+
   def initialize(config = nil)
     self.config = (config || Mina::SetupSsh::Config.new).clone.freeze
   end
