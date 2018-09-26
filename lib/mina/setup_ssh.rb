@@ -19,12 +19,11 @@ class Mina::SetupSsh
   {
     VERSION: :version,
     Config: :config,
+    Configurable: :configurable,
     Keyring: :keyring
   }.each { |k, v| autoload k, "#{__dir__}/setup_ssh/#{v}" }
 
-  def initialize(config = nil)
-    self.config = (config || Config.new).clone.freeze
-  end
+  include Configurable
 
   # Denote verbose.
   #
@@ -32,11 +31,4 @@ class Mina::SetupSsh
   def verbose?
     self.config.fetch(:verbose, false)
   end
-
-  protected
-
-  # Config.
-  #
-  # @type [Config]
-  attr_writer :config
 end

@@ -6,6 +6,7 @@ require 'pathname'
 describe Mina::SetupSsh, :setup_ssh do
   it { expect(described_class).to be_const_defined(:VERSION) }
   it { expect(described_class).to be_const_defined(:Config) }
+  it { expect(described_class).to be_const_defined(:Configurable) }
   it { expect(described_class).to be_const_defined(:Keyring) }
 end
 
@@ -25,6 +26,8 @@ end
 describe Mina::SetupSsh, :setup_ssh do
   it { expect(subject).to respond_to(:config).with(0).arguments }
   it { expect(subject).to respond_to(:verbose?).with(0).arguments }
+
+  it { expect(subject).to be_a(Mina::SetupSsh::Configurable) }
 end
 
 describe Mina::SetupSsh, :setup_ssh do
