@@ -8,6 +8,7 @@ describe Mina::SetupSsh, :setup_ssh do
   it { expect(described_class).to be_const_defined(:Config) }
   it { expect(described_class).to be_const_defined(:Configurable) }
   it { expect(described_class).to be_const_defined(:Keyring) }
+  it { expect(described_class).to be_const_defined(:Shell) }
 end
 
 # class methods

@@ -20,7 +20,8 @@ class Mina::SetupSsh
     VERSION: :version,
     Config: :config,
     Configurable: :configurable,
-    Keyring: :keyring
+    Keyring: :keyring,
+    Shell: :shell,
   }.each { |k, v| autoload k, "#{__dir__}/setup_ssh/#{v}" }
 
   include Configurable
