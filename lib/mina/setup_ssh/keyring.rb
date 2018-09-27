@@ -7,6 +7,7 @@ require_relative '../setup_ssh'
 # Keys are indexed by filename.
 class Mina::SetupSsh::Keyring < Hash
   autoload :Pathname, 'pathname'
+  autoload :Key, "#{__dir__}/keyring/key"
 
   # A new instance.
   #
@@ -32,16 +33,14 @@ class Mina::SetupSsh::Keyring < Hash
     # @return [Hash{String => Pathname}]
     def transform(keys)
       if keys.is_a?(Array)
-        keys = keys.map { |v| [Pathname.new(v).basename.to_s, v] }.to_h
+        return keys.map do |v|
+          key = Key.new(v)
+
+          [key.name, key]
+        end.to_h
       end
 
-      keys.map do |k, v|
-        begin
-          [k.to_s, Pathname.new(v).expand_path.realpath]
-        rescue Errno::ENOENT
-          [k.to_s, Pathname.new(v).expand_path]
-        end
-      end.to_h
+      keys.to_hash.map { |k, v| [k.to_s, Key.new(v)] }
     end
   end
 end

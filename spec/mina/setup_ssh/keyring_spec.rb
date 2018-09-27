@@ -2,6 +2,11 @@
 
 require 'pathname'
 
+# constants
+describe Mina::SetupSsh::Keyring, :keyring do
+  it { expect(described_class).to be_const_defined(:Key) }
+end
+
 # class methods
 describe Mina::SetupSsh::Keyring, :keyring do
   it { expect(described_class).to respond_to(:new).with(0).arguments }
@@ -27,7 +32,7 @@ describe Mina::SetupSsh::Keyring, :keyring do
   end
 end
 
-describe Mina::SetupSsh::Keyring, :keyring do
+describe Mina::SetupSsh::Keyring, :keyring, :wip do
   sham!(:ssh_keys).array_faker.call.map(&:to_s).tap do |keys|
     let(:subject) { described_class.new(keys) }
 
@@ -43,7 +48,7 @@ describe Mina::SetupSsh::Keyring, :keyring do
       context '#fetch()' do
         let(:k) { File.basename(key) }
 
-        it { expect(subject.fetch(k)).to be_a(Pathname) }
+        it { expect(subject.fetch(k)).to be_a(Mina::SetupSsh::Keyring::Key) }
       end
     end
   end
