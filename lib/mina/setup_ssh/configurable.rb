@@ -10,7 +10,7 @@ module Mina::SetupSsh::Configurable
   autoload :Verbose, "#{__dir__}/configurable/verbose"
 
   def initialize(config = nil)
-    self.config = (config || Mina::SetupSsh::Config.new).clone.freeze
+    self.config = Mina::SetupSsh::Config.new(*[config].compact).freeze
   end
 
   # @return [Hash]
