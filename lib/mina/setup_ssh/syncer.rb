@@ -18,6 +18,10 @@ class Mina::SetupSsh::Syncer
     end
   end
 
+  def commands
+    keyring.values.map { |key| Command.new(key, config) }
+  end
+
   def call
     # execute process
   end
