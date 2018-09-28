@@ -22,6 +22,8 @@ class Mina::SetupSsh::Keyring::Key
   def initialize(path, name = nil)
     self.path = path
     self.name = name
+
+    freeze
   end
 
   protected

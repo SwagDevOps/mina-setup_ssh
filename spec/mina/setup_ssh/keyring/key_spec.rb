@@ -16,4 +16,6 @@ describe Mina::SetupSsh::Keyring::Key, :'keyring/key' do
   it { expect(subject).to respond_to(:name).with(0).arguments }
   it { expect(subject).to respond_to(:to_s).with(0).arguments }
   it { expect(subject).to respond_to(:to_path).with(0).arguments }
+
+  it { expect(subject).to be_frozen }
 end
