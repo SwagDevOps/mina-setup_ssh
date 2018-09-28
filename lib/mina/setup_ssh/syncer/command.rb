@@ -13,12 +13,17 @@ class Mina::SetupSsh::Syncer::Command < Array
   include Mina::SetupSsh::Configurable
   include Mina::SetupSsh::Configurable::Verbose
 
+  autoload :Shellwords, 'shellwords'
+
+  # @return [Mina::SetupSsh::Keyring:;Key]
+  attr_reader :key
+
   # @param [Mina::SetupSsh::Keyring::Key] key
   # @param [Hash|nil] config
-  def initialize(_key, config)
+  def initialize(key, config)
     super(config)
 
-    populate
+    populate(key)
   end
 
   def call
@@ -30,19 +35,40 @@ class Mina::SetupSsh::Syncer::Command < Array
   # @return [Hash{Symbol => Object}]
   def variables
     {
-      local_key: key,
-      remote_key: key,
-      port: config.fetch(:port),
+      key_path: key.path,
+      key_name: key.name,
+      port: config.fetch(:port, 22),
       user: config.fetch(:user),
       domain: config.fetch(:domain),
     }
   end
 
+  # Get command pattern.
+  #
+  # Pattern is retrieved from config.
+  #
+  # @return [Array<String>]
+  def pattern
+    config.get(:sync_command).tap do |command|
+      return command.map if command.is_a?(Array)
+
+      return Shellwords.split(command)
+    end
+  end
+
   protected
 
-  def populate
-    self.tap do
-      config.get(:sync_command).each do |v|
+  # @type [Mina::SetupSsh::Keyring::Key]
+  attr_writer :key
+
+  # @param [Mina::SetupSsh::Keyring::Key] key
+  #
+  # @return [Mina::SetupSsh::Keyring::Key]
+  def populate(key)
+    self.key = key
+
+    key.tap do
+      pattern.each do |v|
         self.push(v % variables)
       end
     end
