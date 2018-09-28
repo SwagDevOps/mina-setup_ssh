@@ -32,7 +32,7 @@ describe Mina::SetupSsh::Keyring, :keyring do
   end
 end
 
-describe Mina::SetupSsh::Keyring, :keyring, :wip do
+describe Mina::SetupSsh::Keyring, :keyring do
   sham!(:ssh_keys).array_faker.call.map(&:to_s).tap do |keys|
     let(:subject) { described_class.new(keys) }
 
