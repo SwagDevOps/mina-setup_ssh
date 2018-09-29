@@ -6,7 +6,6 @@ require_relative '../syncer'
 #
 # Some config keys are mandatory:
 #
-# * ``port``
 # * ``user``
 # * ``domain``
 class Mina::SetupSsh::Syncer::Command < Array
@@ -18,16 +17,28 @@ class Mina::SetupSsh::Syncer::Command < Array
   # @return [Mina::SetupSsh::Keyring:;Key]
   attr_reader :key
 
+  # Default shell.
+  #
+  # Shell providing ``#sh`` method.
+  #
+  # @see https://github.com/ruby/rake/blob/68ef9140c11d083d8bb7ee5da5b0543e3a7df73d/lib/rake/file_utils.rb#L44
+  Shell = Mina::SetupSsh::Shell
+
   # @param [Mina::SetupSsh::Keyring::Key] key
   # @param [Hash|nil] config
   def initialize(key, config)
     super(config)
 
+    @shell = nil
     populate(key)
   end
 
+  # Execute command.
+  #
+  # @see Mina::SetupSsh::Shell#sh
+  # @raise [RuntimeError]
   def call
-    # execute command (using shell)
+    shell.sh(*self, verbose: verbose?)
   end
 
   # Get variables.
@@ -60,6 +71,18 @@ class Mina::SetupSsh::Syncer::Command < Array
 
   # @type [Mina::SetupSsh::Keyring::Key]
   attr_writer :key
+
+  # @type [Mina::SetupSsh::Keyring::Key]
+  attr_writer :shell
+
+  # Shell used to execute command.
+  #
+  # @return [Mina::SetupSsh::Shell|Object]
+  def shell
+    self.shell = Shell.new(config) if @shell.nil?
+
+    @shell
+  end
 
   # @param [Mina::SetupSsh::Keyring::Key] key
   #
