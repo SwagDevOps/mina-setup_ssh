@@ -27,4 +27,8 @@ class Mina::SetupSsh
 
   include Configurable
   include Configurable::Verbose
+
+  def syncer
+    Syncer.new(config)
+  end
 end
