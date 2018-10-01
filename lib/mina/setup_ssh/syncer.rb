@@ -18,11 +18,19 @@ class Mina::SetupSsh::Syncer
     end
   end
 
+  # Get commands.
+  #
+  # @return [Array]
   def commands
     keyring.values.map { |key| Command.new(key, config) }
   end
 
+  # Execute commands.
+  #
+  # @raise [RuntimeError]
   def call
-    # execute process
+    commands.each(&:call)
+
+    self
   end
 end
