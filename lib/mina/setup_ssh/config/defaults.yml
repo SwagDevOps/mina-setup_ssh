@@ -5,8 +5,8 @@ add_command:
   - '%<key_path>s'
 sync_command:
   - 'rsync'
-  - '-v'
+  - '-q'
   - '-e'
-  - 'ssh -p %<port>s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+  - 'ssh -p %<port>s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet'
   - '%<key_path>s'
   - '%<user>s@%<domain>s:~/.ssh/%<key_name>s'
