@@ -11,10 +11,9 @@ require_relative '../syncer'
 class Mina::SetupSsh::Syncer::Command < Array
   include Mina::SetupSsh::Configurable
   include Mina::SetupSsh::Configurable::Verbose
-
   autoload :Shellwords, 'shellwords'
 
-  # @return [Mina::SetupSsh::Keyring:;Key]
+  # @return [Mina::SetupSsh::Keyring::Key]
   attr_reader :key
 
   # Default shell.
@@ -29,7 +28,7 @@ class Mina::SetupSsh::Syncer::Command < Array
   def initialize(key, config)
     super(config)
 
-    @shell = nil
+    @shell = Shell.new(config)
     populate(key)
   end
 
@@ -38,7 +37,7 @@ class Mina::SetupSsh::Syncer::Command < Array
   # @see Mina::SetupSsh::Shell#sh
   # @raise [RuntimeError]
   def call
-    shell.sh(*self, verbose: verbose?)
+    shell.sh(*Array.new(self), verbose: verbose?)
   end
 
   # Get variables.
@@ -61,9 +60,7 @@ class Mina::SetupSsh::Syncer::Command < Array
   # @return [Array<String>]
   def pattern
     config.get(:sync_command).tap do |command|
-      return command.map if command.is_a?(Array)
-
-      return Shellwords.split(command)
+      return command.is_a?(Array) ? command : Shellwords.split(command)
     end
   end
 
@@ -72,17 +69,11 @@ class Mina::SetupSsh::Syncer::Command < Array
   # @type [Mina::SetupSsh::Keyring::Key]
   attr_writer :key
 
-  # @type [Mina::SetupSsh::Keyring::Key]
-  attr_writer :shell
-
   # Shell used to execute command.
   #
+  # @type [Mina::SetupSsh::Shell|Object]
   # @return [Mina::SetupSsh::Shell|Object]
-  def shell
-    self.shell = Shell.new(config) if @shell.nil?
-
-    @shell
-  end
+  attr_accessor :shell
 
   # @param [Mina::SetupSsh::Keyring::Key] key
   #
