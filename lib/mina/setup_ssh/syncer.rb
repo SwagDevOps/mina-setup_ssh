@@ -29,7 +29,10 @@ class Mina::SetupSsh::Syncer
   #
   # @raise [RuntimeError]
   def call
-    commands.each(&:call)
+    unless commands.empty?
+      puts "-----> Setting up SSH keys (#{commands.size})"
+      commands.each(&:call)
+    end
 
     self
   end
