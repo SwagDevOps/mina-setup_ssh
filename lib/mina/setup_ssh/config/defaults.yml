@@ -7,6 +7,6 @@ sync_command:
   - 'rsync'
   - '-q'
   - '-e'
-  - 'ssh -p %<port>s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet'
+  - 'ssh -p %<port>s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=error'
   - '%<key_path>s'
   - '%<user>s@%<domain>s:~/.ssh/%<key_name>s'
