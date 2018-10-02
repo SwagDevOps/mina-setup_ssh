@@ -40,7 +40,7 @@ class Mina::SetupSsh::Keyring < Hash
         end.to_h
       end
 
-      keys.to_hash.map { |k, v| [k.to_s, Key.new(v)] }
+      keys.to_hash.map { |k, v| [k.to_s, Key.new(v, k.to_s)] }
     end
   end
 end
