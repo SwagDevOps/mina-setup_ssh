@@ -22,7 +22,7 @@ class Mina::SetupSsh::Syncer
   #
   # @return [Array]
   def commands
-    keyring.values.map { |key| Command.new(key, config) }
+    keyring.values.map { |key| Command.new(key, config).freeze }
   end
 
   # Execute commands.
