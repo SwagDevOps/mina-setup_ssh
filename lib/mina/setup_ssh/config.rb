@@ -17,12 +17,23 @@ class Mina::SetupSsh::Config < Hash
     end
   end
 
+  # Get value by key (using identifier).
+  #
   # @param [Symbol] key
   # @param [Object] default
   #
   # @return [Object|nil]
   def get(key, default = nil)
-    self["#{identifier}_#{key}".to_sym] || default
+    "#{self.identifier}_#{key}".to_sym.tap do |k|
+      return self.key?(k) ? self.fetch(k) : default
+    end
+  end
+
+  # Get config (as ``Hash``) filtered by ``identifier``.
+  #
+  # @return [Hash{Symbol => Object}
+  def filtered
+    Hash[self].keep_if { |k, v| /^#{self.identifier}_/ =~ k }
   end
 
   protected
