@@ -32,12 +32,22 @@ class Mina::SetupSsh::Syncer::Command < Array
     populate(key)
   end
 
+  # @return [String]
+  def to_s
+    Shellwords.join(*self)
+  end
+
+  # @return [Array]
+  def to_a
+    Array.new(self)
+  end
+
   # Execute command.
   #
   # @see Mina::SetupSsh::Shell#sh
   # @raise [RuntimeError]
   def call
-    shell.sh(*Array.new(self), verbose: verbose?)
+    shell.sh(*self.to_a, verbose: verbose?)
   end
 
   # Get variables.
