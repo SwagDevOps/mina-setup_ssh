@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = "Mina SSH keys provisioning."
   s.description = "Provisions deploy machine with SSH keys."
 
-  s.licenses    = []
+  s.licenses    = ["GPL-3.0"]
   s.authors     = ["Dimitri Arrigoni"]
   s.email       = "dimitri@arrigoni.me"
   s.homepage    = "https://github.com/SwagDevOps/mina-setup_ssh"
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
    .flatten
    .push(*s.executables.map { |f| [s.bindir, f].join("/") })
 
+  s.add_runtime_dependency("dry-inflector", ["~> 0.1"])
   s.add_runtime_dependency("kamaze-version", ["~> 1.0"])
   s.add_runtime_dependency("mina", ["~> 1.2"])
 end
