@@ -34,7 +34,7 @@ class Mina::SetupSsh::Syncer::Command < Array
 
   # @return [String]
   def to_s
-    Shellwords.join(*self)
+    Shellwords.join(self)
   end
 
   # @return [Array]
