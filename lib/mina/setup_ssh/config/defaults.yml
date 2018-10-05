@@ -2,7 +2,7 @@
 keys: []
 add_command:
   - 'ssh-add'
-  - '%<key_path>s'
+  - '~/.ssh/%<key_name>s'
 sync_command:
   - 'rsync'
   - '-q'
