@@ -25,8 +25,10 @@ class Mina::SetupSsh
   {
     VERSION: :version,
     Config: :config,
+    Command: :command,
     Configurable: :configurable,
     Keyring: :keyring,
+    Remote: :remote,
     Shell: :shell,
     Syncer: :syncer,
   }.each { |k, v| autoload k, "#{__dir__}/setup_ssh/#{v}" }
