@@ -46,14 +46,10 @@ class Mina::SetupSsh::Remote < Array
   #
   # @return [String]
   def to_s
-    self.map(&:to_s).join("\n").tap do |script|
-      return '' if script.empty?
+    return '' if self.empty?
 
-      return %{
-        echo "-----> Adding SSH identities (#{self.size})"
-        #{script}
-      }
-    end
+    [%{echo "-----> Adding SSH identities (#{self.size})"}]
+      .push(*self.map(&:to_s)).join("\n")
   end
 
   protected
