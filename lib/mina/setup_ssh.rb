@@ -39,4 +39,8 @@ class Mina::SetupSsh
   def syncer
     Syncer.new(config)
   end
+
+  def remote
+    Remote.new(config)
+  end
 end
