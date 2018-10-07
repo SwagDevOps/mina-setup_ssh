@@ -37,11 +37,23 @@ class Mina::SetupSsh::Remote < Array
   # @param [Object] context
   # @return [self]
   def call(context)
-    self.each do |command|
-      context.public_send(:command, command.to_s)
-    end
+    context.public_send(:command, self.to_s)
 
     self
+  end
+
+  # Get script to be executed remotely.
+  #
+  # @return [String]
+  def to_s
+    self.map(&:to_s).join("\n").tap do |script|
+      return '' if script.empty?
+
+      return %{
+        echo "-----> Adding SSH identities (#{self.size})"
+        #{script}
+      }
+    end
   end
 
   protected
