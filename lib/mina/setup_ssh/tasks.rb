@@ -11,6 +11,11 @@ Mina::SetupSsh.new.tap do |setup|
 end
 
 desc 'Copy SSH keys to server'
-task :'setup:ssh' do
+task :'setup:ssh:sync' do
   Mina::SetupSsh.new.syncer.call
+end
+
+desc 'Load SSH keys'
+task :'setup:ssh:load' do
+  Mina::SetupSsh.new.remote.call(self)
 end
