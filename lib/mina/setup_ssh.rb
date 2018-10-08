@@ -24,8 +24,8 @@ class Mina::SetupSsh
 
   {
     VERSION: :version,
-    Config: :config,
     Command: :command,
+    Config: :config,
     Configurable: :configurable,
     Keyring: :keyring,
     Remote: :remote,
