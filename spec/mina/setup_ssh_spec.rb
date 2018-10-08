@@ -5,10 +5,13 @@ require 'pathname'
 # constants
 describe Mina::SetupSsh, :setup_ssh do
   it { expect(described_class).to be_const_defined(:VERSION) }
+  it { expect(described_class).to be_const_defined(:Command) }
   it { expect(described_class).to be_const_defined(:Config) }
   it { expect(described_class).to be_const_defined(:Configurable) }
   it { expect(described_class).to be_const_defined(:Keyring) }
+  it { expect(described_class).to be_const_defined(:Remote) }
   it { expect(described_class).to be_const_defined(:Shell) }
+  it { expect(described_class).to be_const_defined(:Syncer) }
 end
 
 # class methods
