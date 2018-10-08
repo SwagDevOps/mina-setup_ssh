@@ -14,6 +14,9 @@ require_relative '../syncer'
 #
 # * ``user``
 # * ``domain``
+#
+# @todo SHOULD inherit fron ``Mina::SetupSsh::Command``
+# @todo add (spec) examples
 class Mina::SetupSsh::Syncer::Command < Array
   include Mina::SetupSsh::Configurable
   include Mina::SetupSsh::Configurable::Verbose
