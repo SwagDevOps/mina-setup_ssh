@@ -30,6 +30,11 @@ class Mina::SetupSsh::Command < Array
     self.map! { |word| (word % variables).gsub(/^\\~/, '~') }
   end
 
+  # @return [Array<String>]
+  def to_a
+    Array.new(self)
+  end
+
   # @return [String]
   def to_s
     Shellwords.join(self).gsub(/\s+\\~/, ' ~')
