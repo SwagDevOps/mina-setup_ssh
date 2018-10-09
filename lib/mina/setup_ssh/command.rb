@@ -25,7 +25,7 @@ class Mina::SetupSsh::Command < Array
     (command.is_a?(Array) ? command : Shellwords.split(command))
       .tap { |words| super(words) }
 
-    @variables = variables
+    @variables = variables.freeze
 
     self.map! { |word| (word % variables).gsub(/^\\~/, '~') }
   end
