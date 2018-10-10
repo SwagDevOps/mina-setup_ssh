@@ -53,7 +53,37 @@ describe Mina::SetupSsh::Syncer::Command, :'syncer/command' do
       'rsync -q -e ssh\\ -p\\ 22\\ -o\\ ' \
       'UserKnownHostsFile\\=/dev/null\\ -o\\ ' \
       'StrictHostKeyChecking\\=no\\ -o\\ LogLevel\\=error ' \
-      '\\~/.ssh/foo_rsa john_doe@example.com:\\~/.ssh/foo.bar'
+      '~/.ssh/foo_rsa john_doe@example.com:~/.ssh/foo.bar'
+        .tap { |expected| expect(subject.to_s).to eq(expected) }
+    end
+  end
+end
+
+# Command ``String`` initialization
+describe Mina::SetupSsh::Syncer::Command, :'syncer/command' do
+  let(:key) { OpenStruct.new(path: '~/.ssh/foo_rsa', name: 'foo.bar') }
+  let(:subject) { described_class.new(key, config) }
+  let(:config) do
+    {
+      domain: 'example.com',
+      user: 'john_doe',
+      setup_ssh_sync_command:
+        'rsync -q %<key_path>s %<user>s@%<domain>s:~/.ssh/%<key_name>s'
+    }
+  end
+
+  context '#to_a' do
+    it do
+      ['rsync', '-q', '~/.ssh/foo_rsa',
+       'john_doe@example.com:~/.ssh/foo.bar']
+        .tap { |expected| expect(subject.to_a).to eq(expected) }
+    end
+  end
+
+  context '#to_s' do
+    it do
+      'rsync -q ~/.ssh/foo_rsa ' \
+      'john_doe@example.com:~/.ssh/foo.bar'
         .tap { |expected| expect(subject.to_s).to eq(expected) }
     end
   end
