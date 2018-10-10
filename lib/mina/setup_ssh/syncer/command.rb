@@ -17,7 +17,7 @@ require_relative '../syncer'
 #
 # @todo SHOULD inherit fron ``Mina::SetupSsh::Command``
 # @todo add (spec) examples
-class Mina::SetupSsh::Syncer::Command < Array
+class Mina::SetupSsh::Syncer::Command < Mina::SetupSsh::Command
   include Mina::SetupSsh::Configurable
   include Mina::SetupSsh::Configurable::Verbose
   autoload :Shellwords, 'shellwords'
@@ -39,16 +39,6 @@ class Mina::SetupSsh::Syncer::Command < Array
 
     @shell = Shell.new(config)
     populate(key)
-  end
-
-  # @return [String]
-  def to_s
-    Shellwords.join(self)
-  end
-
-  # @return [Array]
-  def to_a
-    Array.new(self)
   end
 
   # Execute command.
