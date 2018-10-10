@@ -10,10 +10,10 @@ require_relative '../setup_ssh'
 
 # Describe a command line.
 #
-# Given variables are ...
+# Given variables are stored to be used later on  format placeholders.
+# A command can be initialized from ``String`` or ``Array``, is an
+# ``Array`` representation for a shell command-line.
 class Mina::SetupSsh::Command < Array
-  autoload :Shellwords, 'shellwords'
-
   # Get variables.
   #
   # @return [Hash{Symbol => Object}]
@@ -22,12 +22,12 @@ class Mina::SetupSsh::Command < Array
   # @param [Array<String>|String] command
   # @param [Hash{Symbol => Object}] variables
   def initialize(command = [], variables = {})
-    (command.is_a?(Array) ? command : Shellwords.split(command))
+    (command.is_a?(Array) ? command : self.class.split(command))
       .tap { |words| super(words) }
 
     @variables = variables.freeze
 
-    self.map! { |word| (word % variables).gsub(/^\\~/, '~') }
+    self.map! { |word| (word % variables) }
   end
 
   # @return [Array<String>]
@@ -37,6 +37,26 @@ class Mina::SetupSsh::Command < Array
 
   # @return [String]
   def to_s
-    Shellwords.join(self).gsub(/\s+\\~/, ' ~')
+    self.class.join(self)
+  end
+
+  class << self
+    autoload :Shellwords, 'shellwords'
+
+    # Split given command into shell words.
+    #
+    # @param [String] command
+    # @return [Array<string>]
+    def split(command)
+      Shellwords.split(command)
+    end
+
+    # Join given shell words into command-line.
+    #
+    # @param [Array<string>] command
+    # @return [String]
+    def join(command)
+      Shellwords.join(command).gsub(/\\~/, '~')
+    end
   end
 end
