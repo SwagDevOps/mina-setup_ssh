@@ -20,14 +20,43 @@ describe Mina::SetupSsh::Syncer::Command, :'syncer/command' do
     described_class.new(key, user: 'john_doe', domain: 'foo.bar')
   end
 
+  it { expect(subject).to be_a(Mina::SetupSsh::Command) }
   it { expect(subject).to be_a(Mina::SetupSsh::Configurable) }
   it { expect(subject).to be_a(Mina::SetupSsh::Configurable::Verbose) }
+
+  it { expect(subject).to be_frozen }
 
   it { expect(subject).to respond_to(:key).with(0).arguments }
   it { expect(subject).to respond_to(:variables).with(0).arguments }
   it { expect(subject).to respond_to(:pattern).with(0).arguments }
   it { expect(subject).to respond_to(:to_s).with(0).arguments }
   it { expect(subject).to respond_to(:to_a).with(0).arguments }
+end
+
+# variables
+describe Mina::SetupSsh::Syncer::Command, :'syncer/command' do
+  let(:subject) do
+    key = OpenStruct.new(path: __FILE__, name: 'localhost')
+
+    described_class.new(key, user: 'john_doe', domain: 'foo.bar')
+  end
+
+  context '#variables' do
+    it { expect(subject.variables).to be_a(Hash) }
+    it { expect(subject.variables).to be_frozen }
+  end
+
+  context '#variables.empty?' do
+    it { expect(subject.variables.empty?).to be(false) }
+  end
+
+  context '#variables.keys.sort' do
+    it do
+      [:domain, :key_name, :key_path, :port, :user].tap do |expected|
+        expect(subject.variables.keys.sort).to eq(expected)
+      end
+    end
+  end
 end
 
 describe Mina::SetupSsh::Syncer::Command, :'syncer/command' do
