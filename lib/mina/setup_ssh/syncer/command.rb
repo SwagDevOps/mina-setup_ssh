@@ -38,7 +38,9 @@ class Mina::SetupSsh::Syncer::Command < Mina::SetupSsh::Command
     super(config)
 
     @shell = Shell.new(config)
+
     populate(key)
+    freeze
   end
 
   # Execute command.
@@ -47,19 +49,6 @@ class Mina::SetupSsh::Syncer::Command < Mina::SetupSsh::Command
   # @raise [RuntimeError]
   def call
     shell.sh(*self.to_a, verbose: verbose?)
-  end
-
-  # Get variables.
-  #
-  # @return [Hash{Symbol => Object}]
-  def variables
-    {
-      key_path: key.path,
-      key_name: key.name,
-      port: config.fetch(:port, 22),
-      user: config.fetch(:user),
-      domain: config.fetch(:domain),
-    }
   end
 
   # Get command pattern.
@@ -89,11 +78,27 @@ class Mina::SetupSsh::Syncer::Command < Mina::SetupSsh::Command
   # @return [Mina::SetupSsh::Keyring::Key]
   def populate(key)
     self.key = key
+    @variables = fetch_variables.freeze
 
     key.tap do
       pattern.each do |v|
         self.push(v % variables)
       end
     end
+  end
+
+  # Fetch variables.
+  #
+  # Variables are composed from ``key`` and ``config``.
+  #
+  # @return [Hash{Symbol => Object}]
+  def fetch_variables
+    {
+      key_path: key.path,
+      key_name: key.name,
+      port: config.fetch(:port, 22),
+      user: config.fetch(:user),
+      domain: config.fetch(:domain),
+    }
   end
 end
