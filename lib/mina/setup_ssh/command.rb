@@ -28,6 +28,7 @@ class Mina::SetupSsh::Command < Array
     @variables = variables.freeze
 
     self.map! { |word| (word % variables) }
+    freeze
   end
 
   # @return [Array<String>]
