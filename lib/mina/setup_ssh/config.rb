@@ -37,7 +37,7 @@ class Mina::SetupSsh::Config < Hash
 
   # Get config (as ``Hash``) filtered by ``identifier``.
   #
-  # @return [Hash{Symbol => Object}
+  # @return [Hash{Symbol => Object}]
   def filtered
     Hash[self].keep_if { |k, v| /^#{self.identifier}_/ =~ k }
   end
