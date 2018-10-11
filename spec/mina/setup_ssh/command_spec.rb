@@ -12,12 +12,14 @@ end
 # instance methods
 describe Mina::SetupSsh::Command, :command do
   it { expect(subject).to be_a(Array) }
+  it { expect(subject).to be_frozen }
 
   it { expect(subject).to respond_to(:variables).with(0).arguments }
   it { expect(subject).to respond_to(:to_a).with(0).arguments }
 
   context '#variables' do
     it { expect(subject.variables).to be_a(Hash) }
+    it { expect(subject.variables).to be_frozen }
   end
 end
 
