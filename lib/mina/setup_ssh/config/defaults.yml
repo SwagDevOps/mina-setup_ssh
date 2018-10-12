@@ -1,6 +1,6 @@
 ---
 keys: []
-add_command:
+load_command:
   - 'ssh-add'
   - '~/.ssh/%<key_name>s'
 sync_command:

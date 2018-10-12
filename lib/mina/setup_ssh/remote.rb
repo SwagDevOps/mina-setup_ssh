@@ -19,7 +19,7 @@ class Mina::SetupSsh::Remote < Array
   def initialize(*)
     super
 
-    self.config.get(:add_command).tap do |command|
+    self.config.get(:load_command).tap do |command|
       self.keyring.each do |name, local_file|
         self.push(Command.new(command, key_name: name))
       end
