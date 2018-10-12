@@ -7,7 +7,6 @@ source 'https://rubygems.org'
 group :default do
   gem 'dry-inflector', '~> 0.1'
   gem 'kamaze-version', '~> 1.0'
-  gem 'mina', '~> 1.2'
 end
 
 group :development do
@@ -24,6 +23,8 @@ group :development do
   gem 'redcarpet', '~> 3.4'
   gem 'yard', '~> 0.9'
   gem 'yard-coderay', '~> 0.1'
+  # subject ------------------------------
+  gem 'mina', '~> 1.2'
 end
 
 group :test do

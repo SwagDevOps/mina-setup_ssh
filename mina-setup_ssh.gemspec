@@ -34,7 +34,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency("dry-inflector", ["~> 0.1"])
   s.add_runtime_dependency("kamaze-version", ["~> 1.0"])
-  s.add_runtime_dependency("mina", ["~> 1.2"])
 end
 
 # Local Variables:
