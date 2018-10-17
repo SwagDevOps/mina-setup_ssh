@@ -21,6 +21,9 @@ Depends on the following settings:
 * ``user``
 * ``domain``
 
+When ``setup_ssh_keys`` is a ``Hash``, keys are used to name
+files received by the server. When an ``Array`` file naming is symetric.
+
 ## Executable dependencies
 
 | Executable  |                                                 |
