@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../setup_ssh'
+
 # Copyright (C) 2017-2018 Dimitri Arrigoni <dimitri@arrigoni.me>
 # License GPLv3+: GNU GPL version 3 or later
 # <http://www.gnu.org/licenses/gpl.html>.
